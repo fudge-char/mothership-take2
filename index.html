@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greenline Lawn Co. — Local Lawn Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil: #241c14;
+    --soil-light: #342718;
+    --soil-edge: #1a140d;
+    --green-deep: #2c5e2b;
+    --green: #3f7d3a;
+    --green-light: #6fa85c;
+    --green-pale: #d8e8cf;
+    --cream: #f2eee1;
+    --cream-dim: #e9e3d2;
+    --marigold: #e2a33b;
+    --marigold-dark: #c98a26;
+    --ink: #241c14;
+    --ink-soft: #564a39;
+
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Karla', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img, svg{ display:block; max-width:100%; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  :focus-visible{
+    outline: 3px solid var(--marigold);
+    outline-offset: 2px;
+  }
+
+  .wrap{
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  h1, h2, h3{
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.98rem;
+    padding: 14px 26px;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+  .btn:hover{ transform: translateY(-2px); }
+  .btn-primary{
+    background: var(--marigold);
+    color: var(--soil);
+  }
+  .btn-primary:hover{ background: var(--marigold-dark); }
+  .btn-outline{
+    background: transparent;
+    border-color: rgba(242,238,225,0.45);
+    color: var(--cream);
+  }
+  .btn-outline:hover{ border-color: var(--cream); }
+  .btn-outline.dark{
+    border-color: rgba(36,28,20,0.35);
+    color: var(--ink);
+  }
+  .btn-outline.dark:hover{ border-color: var(--ink); }
+
+  /* ---------- Stripe motif ---------- */
+  .stripes{
+    background-image: repeating-linear-gradient(
+      115deg,
+      var(--green-deep) 0px, var(--green-deep) 64px,
+      var(--green-light) 64px, var(--green-light) 128px
+    );
+    background-size: 181px 181px;
+  }
+  .stripe-divider{
+    height: 14px;
+    background-image: repeating-linear-gradient(
+      115deg,
+      var(--green) 0px, var(--green) 22px,
+      var(--green-light) 22px, var(--green-light) 44px
+    );
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .stripes{ animation: driftStripes 26s linear infinite; }
+  }
+  @keyframes driftStripes{
+    from{ background-position: 0 0; }
+    to{ background-position: 724px 0; }
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    padding: 18px 0;
+    transition: background 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease;
+  }
+  header.scrolled{
+    background: var(--soil);
+    padding: 12px 0;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.3rem;
+    color: var(--cream);
+  }
+  .logo svg{ flex-shrink:0; }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap: 34px;
+    list-style:none;
+  }
+  .nav-links a{
+    color: var(--cream);
+    font-size: 0.95rem;
+    font-weight: 600;
+    opacity: 0.88;
+    transition: opacity 0.2s ease;
+  }
+  .nav-links a:hover{ opacity: 1; }
+  .nav-cta{ display:flex; align-items:center; gap:22px; }
+  .nav-toggle{
+    display:none;
+    background:none; border:none; cursor:pointer;
+    color: var(--cream);
+    padding: 6px;
+  }
+  .nav-toggle svg{ width:26px; height:26px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position: relative;
+    background: var(--soil);
+    color: var(--cream);
+    padding: 168px 0 110px;
+    overflow: hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(180deg, var(--soil) 0%, var(--soil) 38%, transparent 70%);
+    z-index: 1;
+  }
+  .hero-stripes{
+    position:absolute;
+    inset:0;
+    opacity: 0.5;
+  }
+  .hero-inner{
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+  }
+  .hero .eyebrow{ color: var(--green-light); margin-bottom: 18px; }
+  .hero h1{
+    font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+    margin-bottom: 22px;
+  }
+  .hero h1 em{
+    font-style: normal;
+    color: var(--marigold);
+  }
+  .hero p.lede{
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    color: var(--green-pale);
+    max-width: 540px;
+    margin-bottom: 36px;
+  }
+  .hero-actions{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 46px;
+  }
+  .trust-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 22px;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: rgba(242,238,225,0.75);
+  }
+  .trust-chips span{ display:flex; align-items:center; gap:8px; }
+  .trust-chips svg{ width:14px; height:14px; color: var(--marigold); }
+
+  /* ---------- Section scaffolding ---------- */
+  section{ padding: 96px 0; }
+  .section-head{
+    max-width: 620px;
+    margin-bottom: 56px;
+  }
+  .section-head .eyebrow{ color: var(--green); margin-bottom: 14px; }
+  .section-head h2{
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    color: var(--ink);
+  }
+  .section-head p{
+    margin-top: 16px;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+  }
+  .on-dark .section-head .eyebrow{ color: var(--green-light); }
+  .on-dark .section-head h2, .on-dark .section-head p{ color: var(--cream); }
+  .on-dark .section-head p{ color: rgba(242,238,225,0.7); }
+
+  /* ---------- Services ---------- */
+  .services-grid{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+  .service-card{
+    background: var(--cream);
+    border: 1px solid rgba(36,28,20,0.12);
+    border-radius: 8px;
+    padding: 28px 22px 26px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .service-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(36,28,20,0.12);
+  }
+  .service-tag{
+    position:absolute;
+    top:-1px; left: 22px;
+    background: var(--marigold);
+    color: var(--soil);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    padding: 4px 9px;
+    border-radius: 0 0 5px 5px;
+    font-weight: 600;
+  }
+  .service-card svg{
+    width: 34px; height: 34px;
+    color: var(--green);
+    margin: 18px 0 18px;
+  }
+  .service-card h3{
+    font-size: 1.18rem;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .service-card p{
+    font-size: 0.94rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Process ---------- */
+  .process-section{ background: var(--cream-dim); }
+  .mow-path-wrap{
+    position: relative;
+    margin-bottom: 40px;
+  }
+  .steps{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    position: relative;
+  }
+  .step{
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 30px 24px;
+    border: 1px solid rgba(36,28,20,0.1);
+  }
+  .step-num{
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--marigold-dark);
+    font-weight: 600;
+    display:block;
+    margin-bottom: 14px;
+  }
+  .step h3{
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  .step p{ color: var(--ink-soft); font-size: 0.95rem; }
+
+  /* ---------- Guarantee band ---------- */
+  .guarantee-band{
+    background: var(--green-deep);
+    color: var(--cream);
+    padding: 0;
+  }
+  .guarantee-inner{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 44px 0;
+  }
+  .guarantee-item{
+    display:flex;
+    align-items:flex-start;
+    gap: 14px;
+    flex: 1 1 240px;
+  }
+  .guarantee-item svg{
+    width: 26px; height:26px;
+    flex-shrink:0;
+    color: var(--marigold);
+    margin-top: 2px;
+  }
+  .guarantee-item strong{
+    display:block;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    margin-bottom: 4px;
+  }
+  .guarantee-item span{
+    font-size: 0.88rem;
+    color: rgba(242,238,225,0.75);
+  }
+
+  /* ---------- Pricing ---------- */
+  .pricing-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
+  .price-card{
+    background: var(--cream);
+    border: 1px solid rgba(36,28,20,0.14);
+    border-radius: 10px;
+    padding: 32px 28px;
+    display:flex;
+    flex-direction:column;
+    position: relative;
+  }
+  .price-card.popular{
+    border-color: var(--marigold);
+    box-shadow: 0 0 0 1px var(--marigold), 0 18px 32px rgba(226,163,59,0.18);
+  }
+  .popular-flag{
+    position:absolute;
+    top: -13px;
+    right: 24px;
+    background: var(--marigold);
+    color: var(--soil);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.07em;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .price-card .lot-eyebrow{ color: var(--green); margin-bottom: 8px; }
+  .price-card h3{ font-size: 1.4rem; margin-bottom: 6px; }
+  .price-card .price{
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin: 10px 0 4px;
+    color: var(--ink);
+  }
+  .price-card .price span{
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+  }
+  .price-card ul{
+    list-style:none;
+    margin: 22px 0 28px;
+    flex-grow: 1;
+  }
+  .price-card li{
+    display:flex;
+    gap: 10px;
+    align-items:flex-start;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    padding: 7px 0;
+  }
+  .price-card li svg{
+    width: 16px; height:16px;
+    color: var(--green);
+    margin-top: 3px;
+    flex-shrink:0;
+  }
+
+  /* ---------- Testimonials ---------- */
+  .testimonials-section{
+    background: var(--soil);
+    color: var(--cream);
+  }
+  .postcards{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .postcard{
+    background: var(--cream);
+    color: var(--ink);
+    border-radius: 4px;
+    padding: 26px 24px;
+    position: relative;
+    box-shadow: 0 14px 26px rgba(0,0,0,0.25);
+    transform: rotate(var(--tilt, 0deg));
+  }
+  .postcard:nth-child(1){ --tilt: -1.4deg; }
+  .postcard:nth-child(2){ --tilt: 0.8deg; }
+  .postcard:nth-child(3){ --tilt: -0.6deg; }
+  .postcard .quote-mark{
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    color: var(--marigold);
+    line-height: 0.4;
+    display:block;
+    margin-bottom: 6px;
+  }
+  .postcard p.quote{
+    font-size: 0.98rem;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .postcard .who{
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    border-top: 1px dashed rgba(36,28,20,0.25);
+    padding-top: 12px;
+  }
+
+  /* ---------- Quote form ---------- */
+  .quote-section{ background: var(--soil); }
+  .quote-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  .quote-info h2{
+    color: var(--cream);
+    font-size: clamp(1.9rem, 3vw, 2.5rem);
+    margin-bottom: 18px;
+  }
+  .quote-info p{
+    color: rgba(242,238,225,0.72);
+    margin-bottom: 28px;
+    font-size: 1.02rem;
+  }
+  .contact-line{
+    display:flex;
+    gap: 12px;
+    align-items:flex-start;
+    margin-bottom: 18px;
+  }
+  .contact-line svg{ width:18px; height:18px; color: var(--marigold); margin-top:3px; flex-shrink:0; }
+  .contact-line strong{ display:block; color: var(--cream); font-size:0.95rem; }
+  .contact-line span{ color: rgba(242,238,225,0.65); font-size:0.88rem; }
+
+  form{
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 32px;
+  }
+  .form-row{ margin-bottom: 18px; }
+  .form-row label{
+    display:block;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 7px;
+  }
+  .form-row input, .form-row select, .form-row textarea{
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    padding: 12px 14px;
+    border-radius: 6px;
+    border: 1.5px solid rgba(36,28,20,0.22);
+    background: #fff;
+    color: var(--ink);
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus{
+    border-color: var(--green);
+  }
+  .form-two{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  form .btn{ width: 100%; justify-content:center; margin-top: 6px; }
+  .form-note{
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-top: 14px;
+    text-align:center;
+  }
+  .form-success{
+    display:none;
+    text-align:center;
+    padding: 30px 10px;
+  }
+  .form-success svg{ width:46px; height:46px; color: var(--green); margin: 0 auto 14px; }
+  .form-success h3{ font-size:1.3rem; margin-bottom:8px; }
+  .form-success p{ color: var(--ink-soft); font-size:0.95rem; }
+
+  /* ---------- Footer ---------- */
+  footer{
+    background: var(--soil-edge);
+    color: rgba(242,238,225,0.55);
+    padding: 28px 0;
+    font-size: 0.85rem;
+  }
+  .footer-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-row .logo{ font-size: 1rem; color: rgba(242,238,225,0.8); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .services-grid{ grid-template-columns: repeat(2, 1fr); }
+    .steps{ grid-template-columns: 1fr; }
+    .pricing-grid{ grid-template-columns: 1fr; max-width: 460px; margin: 0 auto; }
+    .postcards{ grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    .quote-grid{ grid-template-columns: 1fr; gap: 40px; }
+    .guarantee-inner{ flex-direction:column; }
+  }
+  @media (max-width: 720px){
+    .nav-links, .nav-cta .btn-outline{ display:none; }
+    .nav-toggle{ display:block; }
+    nav.open .nav-links{
+      display:flex;
+      position:absolute;
+      top: 100%; left:0; right:0;
+      flex-direction:column;
+      background: var(--soil);
+      padding: 20px 32px 28px;
+      gap: 18px;
+      box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+    }
+    .services-grid{ grid-template-columns: 1fr; }
+    .hero{ padding: 140px 0 80px; }
+    .form-two{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="wrap">
+    <nav id="main-nav">
+      <a href="#top" class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <path d="M14 25C14 25 6 19.5 6 12.5C6 8 9.5 4 14 4C18.5 4 22 8 22 12.5C22 19.5 14 25 14 25Z" fill="#3f7d3a"/>
+          <path d="M14 25C14 25 14 16 14 11" stroke="#241c14" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Greenline
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">How it works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#quote" class="btn btn-outline">Get a free quote</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-stripes stripes" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <p class="eyebrow">Local lawn care &middot; Hartwell County</p>
+      <h1>Cut clean. Fed right.<br>Every week, <em>on schedule.</em></h1>
+      <p class="lede">Greenline keeps your lawn mowed, edged, and weed-free all season — one flat rate, no surprise invoices, same crew every visit.</p>
+      <div class="hero-actions">
+        <a href="#quote" class="btn btn-primary">Get a free quote →</a>
+        <a href="#services" class="btn btn-outline">See what's included</a>
+      </div>
+      <div class="trust-chips">
+        <span><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>Licensed &amp; insured</span>
+        <span><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>Satisfaction guarantee</span>
+        <span><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>Same-week start</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What we do</p>
+        <h2>Everything your lawn needs, nothing it doesn't.</h2>
+        <p>Pick a single service or bundle the season — every visit follows the same route, the same crew, the same checklist.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <span class="service-tag">WEEKLY</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="14" height="7" rx="1"/><circle cx="6" cy="20" r="1.4"/><circle cx="14" cy="20" r="1.4"/><path d="M17 13h2.5L22 16v2h-3"/></svg>
+          <h3>Mowing &amp; Edging</h3>
+          <p>Weekly or biweekly visits. Crisp edges along every walk and bed, every single time.</p>
+        </div>
+
+        <div class="service-card">
+          <span class="service-tag">SEASONAL</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6M12 9c-3 0-5 2-5 5h10c0-3-2-5-5-5z"/><path d="M7 21h10"/></svg>
+          <h3>Fertilization &amp; Weed Control</h3>
+          <p>A seasonal feeding schedule that builds thick turf and starves out weeds before they spread.</p>
+        </div>
+
+        <div class="service-card">
+          <span class="service-tag">SPRING / FALL</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18c4-1 6-5 8-9 2 4 4 8 8 9"/><path d="M4 18h16"/></svg>
+          <h3>Spring &amp; Fall Cleanup</h3>
+          <p>Leaf removal, bed cleanout, and the first and last cut of the season — handled before you ask.</p>
+        </div>
+
+        <div class="service-card">
+          <span class="service-tag">AS NEEDED</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 7 5 11 5 14a7 7 0 0014 0c0-3-3-7-7-12z"/></svg>
+          <h3>Mulch &amp; Bed Maintenance</h3>
+          <p>Fresh mulch, clean lines, and flower beds that stay weeded in between visits.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="process-section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>From first walk to weekly routine.</h2>
+        <p>Three passes, same as a real mow: we look, we plan, then we keep coming back.</p>
+      </div>
+
+      <div class="mow-path-wrap">
+        <svg viewBox="0 0 1000 170" preserveAspectRatio="none" style="width:100%;height:auto;" aria-hidden="true">
+          <path id="mow-path" d="M30,30 H760 V90 H30 V150 H760" fill="none" stroke="#bcae8d" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round"/>
+          <circle cx="30" cy="30" r="7" fill="#3f7d3a"/>
+          <circle cx="760" cy="90" r="7" fill="#3f7d3a"/>
+          <circle cx="30" cy="150" r="7" fill="#3f7d3a"/>
+          <g id="mower-marker">
+            <circle r="9" fill="#e2a33b"/>
+          </g>
+          <animateMotion id="mower-anim" xlink:href="#mower-marker" dur="9s" repeatCount="indefinite" rotate="auto">
+            <mpath xlink:href="#mow-path"/>
+          </animateMotion>
+        </svg>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01 — Walk the yard</span>
+          <h3>We measure &amp; map</h3>
+          <p>A crew lead walks the lot, checks soil and shade, and notes any trouble spots before quoting anything.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02 — Get your plan</span>
+          <h3>Flat rate, sent same day</h3>
+          <p>A flat weekly rate and a season-long care schedule land in your inbox the day we visit — no follow-up calls needed.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03 — We show up</span>
+          <h3>Mowed, on schedule</h3>
+          <p>Our crew mows, edges, and treats on schedule. Rain delays are built in — no surprise charges, ever.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARANTEE BAND -->
+  <div class="guarantee-band">
+    <div class="wrap guarantee-inner">
+      <div class="guarantee-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        <div><strong>Re-mow, free</strong><span>Not happy with a visit? We come back and fix it at no charge.</span></div>
+      </div>
+      <div class="guarantee-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>
+        <div><strong>Same crew, every visit</strong><span>One trained crew learns your yard — not a rotating cast.</span></div>
+      </div>
+      <div class="guarantee-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+        <div><strong>No contracts</strong><span>Cancel or pause with one text, anytime in the season.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Lawn sizes</p>
+        <h2>Pricing that matches your lot, not a sales pitch.</h2>
+        <p>One flat rate per visit, based on lawn size. Treatments and cleanups are quoted separately once we've walked the yard.</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <div class="price-card">
+          <p class="eyebrow lot-eyebrow">Small lot</p>
+          <h3>Up to 5,000 sq ft</h3>
+          <p class="price">$35 <span>/ visit</span></p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Mow, trim &amp; edge</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Clippings blown off hard surfaces</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Weekly or biweekly</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Text reminder day-of</li>
+          </ul>
+          <a href="#quote" class="btn btn-outline dark" data-lot="small">Choose small</a>
+        </div>
+
+        <div class="price-card popular">
+          <span class="popular-flag">Most chosen</span>
+          <p class="eyebrow lot-eyebrow">Medium lot</p>
+          <h3>5,000 – 10,000 sq ft</h3>
+          <p class="price">$50 <span>/ visit</span></p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Everything in Small</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Bed edging included</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Priority scheduling</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Seasonal plan discount</li>
+          </ul>
+          <a href="#quote" class="btn btn-primary" data-lot="medium">Choose medium</a>
+        </div>
+
+        <div class="price-card">
+          <p class="eyebrow lot-eyebrow">Large lot</p>
+          <h3>10,000+ sq ft</h3>
+          <p class="price">$70 <span>/ visit</span></p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Everything in Medium</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Two-person crew</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Bed &amp; mulch check-ins</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>Custom care calendar</li>
+          </ul>
+          <a href="#quote" class="btn btn-outline dark" data-lot="large">Choose large</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="reviews" class="testimonials-section on-dark">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Reviews</p>
+        <h2>Neighbors who don't think about their lawn anymore.</h2>
+      </div>
+      <div class="postcards">
+        <div class="postcard">
+          <span class="quote-mark">&ldquo;</span>
+          <p class="quote">Same crew every week and the edges are razor sharp. I genuinely forgot I used to mow myself.</p>
+          <p class="who">Maren O. — Birchwood</p>
+        </div>
+        <div class="postcard">
+          <span class="quote-mark">&ldquo;</span>
+          <p class="quote">Switched after a contractor ghosted us mid-season. Greenline sends a text the morning of, every time.</p>
+          <p class="who">Devon R. — Coldwater Run</p>
+        </div>
+        <div class="postcard">
+          <span class="quote-mark">&ldquo;</span>
+          <p class="quote">The fall cleanup alone was worth it. Beds look better now than when we first landscaped.</p>
+          <p class="who">Priya S. — Ashford Hill</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE FORM -->
+  <section id="quote" class="quote-section">
+    <div class="wrap quote-grid">
+      <div class="quote-info">
+        <h2>Get a flat-rate quote today.</h2>
+        <p>Tell us about your lawn and we'll text back a price the same business day — usually within a couple hours.</p>
+
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+          <div><strong>(555) 010-0142</strong><span>Call or text, 7am – 7pm</span></div>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+          <div><strong>hello@greenlineyard.example</strong><span>We reply within one business day</span></div>
+        </div>
+        <div class="contact-line">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div><strong>Hartwell County &amp; surrounding towns</strong><span>Same-week start for new customers</span></div>
+        </div>
+      </div>
+
+      <div>
+        <form id="quote-form">
+          <div class="form-row">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" required placeholder="Jordan Lee">
+          </div>
+          <div class="form-two">
+            <div class="form-row">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" required placeholder="(555) 555-0123">
+            </div>
+            <div class="form-row">
+              <label for="lot">Lot size</label>
+              <select id="lot" name="lot">
+                <option value="small">Small — up to 5,000 sq ft</option>
+                <option value="medium">Medium — 5,000–10,000 sq ft</option>
+                <option value="large">Large — 10,000+ sq ft</option>
+                <option value="unsure">Not sure</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="address">Address</label>
+            <input id="address" name="address" type="text" required placeholder="Street, town">
+          </div>
+          <div class="form-row">
+            <label for="message">Anything we should know?</label>
+            <textarea id="message" name="message" rows="3" placeholder="Slopes, dog in the yard, gate code, etc."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Request my quote</button>
+          <p class="form-note">No spam, no contracts — just a price.</p>
+        </form>
+
+        <div class="form-success" id="form-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <h3>Got it, thanks!</h3>
+          <p>We'll text you a quote within one business day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span class="logo">Greenline Lawn Co.</span>
+    <span>© 2026 Greenline Lawn Co. — Hartwell County</span>
+  </div>
+</footer>
+
+<script>
+  // Nav background on scroll
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('nav-toggle');
+  const mainNav = document.getElementById('main-nav');
+  navToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', false);
+    });
+  });
+
+  // Respect reduced motion: stop mower animation
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    const anim = document.getElementById('mower-anim');
+    if (anim) anim.setAttribute('repeatCount', '0');
+  }
+
+  // Pricing card -> preselect lot size in form
+  document.querySelectorAll('[data-lot]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lotSelect = document.getElementById('lot');
+      if (lotSelect) lotSelect.value = btn.dataset.lot;
+    });
+  });
+
+  // Quote form: front-end only confirmation
+  const form = document.getElementById('quote-form');
+  const success = document.getElementById('form-success');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.style.display = 'none';
+    success.style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
